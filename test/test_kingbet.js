@@ -37,4 +37,19 @@ contract("KingBetFactory", accounts => {
         after = web3.utils.fromWei(after, "ether");
         assert(Number(after) > Number(before));
     });
+
+    it("should be lottery", async () => {
+        let banker = accounts[0];
+        let account_1 = accounts[1];
+        let account_2 = accounts[2];
+        let account1_before = await web3.eth.getBalance(account_1);
+        let account2_before = await web3.eth.getBalance(account_2);
+        await kingbet.bet(1, {from: account_1, value: web3.utils.toWei('2', 'ether')});
+        await kingbet.bet(2, {from: account_2, value: web3.utils.toWei('2', 'ether')});
+        await kingbet.lottery(1, {from: banker});
+        let account1_after = await web3.eth.getBalance(account_1);
+        account1_before = web3.utils.fromWei(account1_before, 'ether');
+        account1_after = web3.utils.fromWei(account1_after, 'ether');
+        assert(Number(account1_before) < Number(account1_after));
+    });
 });

@@ -67,12 +67,12 @@ contract KingBet {
         require(msg.sender == banker, "must be banker");
         require(totalLeftFound > 0);
         require(totalRightFound > 0);
+        require(ended == false);
         uint tip = 0;
         uint winners_tip = 0;
         uint losers_tip = 0;
         uint totalWinner = 0;
         uint totalLoser = 0;
-        uint totalFound = 0;
         Bet[] memory winners = leftTeamFound;
         if (_winner == 1) {
             totalWinner = totalLeftFound;
@@ -87,10 +87,10 @@ contract KingBet {
         totalWinner -= winners_tip;
         totalLoser -= losers_tip;
         tip = winners_tip + losers_tip; 
-        totalFound = totalWinner + totalLoser;
         // pay for winner player
-        for (uint i = 0; i <= winners.length; i++){
+        for (uint i = 0; i < winners.length; i++){
             uint _bet = winners[i].price;
+            _bet -= calcTip(_bet);
             uint lottery_price = _bet + (_bet * (totalLoser / totalWinner));
             winners[i].player.transfer(lottery_price);
         }
