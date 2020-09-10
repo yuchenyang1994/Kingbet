@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.0;
 
-contract MetaBetFactory {
+contract KingBetFactory {
     mapping(uint => address) public metaBets;
 
     function crateMetabet(uint betID, uint _time) public {
@@ -43,7 +43,7 @@ contract KingBet {
     }
 
     function bet(uint _team) public payable {
-        require(block.timestamp > betEndtime, "this bet is end");
+        require(block.timestamp < betEndtime, "this bet is end");
         require(msg.value > 0.01 ether, "must > 0.01 ether");
         require(msg.sender.balance > msg.value);
         require(ended == false, "bet is ended");
@@ -65,7 +65,11 @@ contract KingBet {
     // banker is blink
     function lottery(uint _winner) public {
         require(msg.sender == banker, "must be banker");
+        require(totalLeftFound > 0);
+        require(totalRightFound > 0);
         uint tip = 0;
+        uint winners_tip = 0;
+        uint losers_tip = 0;
         uint totalWinner = 0;
         uint totalLoser = 0;
         uint totalFound = 0;
@@ -78,13 +82,16 @@ contract KingBet {
             totalLoser = totalRightFound;
             winners = rightTeamFound;
         }
-        tip = calcTip(totalWinner);
-        totalWinner -= tip;
+        winners_tip = calcTip(totalWinner);
+        losers_tip = calcTip(totalLoser);
+        totalWinner -= winners_tip;
+        totalLoser -= losers_tip;
+        tip = winners_tip + losers_tip; 
         totalFound = totalWinner + totalLoser;
         // pay for winner player
         for (uint i = 0; i <= winners.length; i++){
             uint _bet = winners[i].price;
-            uint lottery_price = ( _bet * ( 10000 + ( totalLoser * 10000 / totalWinner ) ) ) / 10000; 
+            uint lottery_price = _bet + (_bet * (totalLoser / totalWinner));
             winners[i].player.transfer(lottery_price);
         }
         ended = true;
@@ -94,10 +101,10 @@ contract KingBet {
 
     function refound() public {
         require(msg.sender == banker, "must be banker");
-        for (uint i = 0; i <= leftTeamFound.length; i++){
+        for (uint i = 0; i < leftTeamFound.length; i++){
             leftTeamFound[i].player.transfer(leftTeamFound[i].price);
         }
-        for (uint i = 0; i <= rightTeamFound.length; i++){
+        for (uint i = 0; i < rightTeamFound.length; i++){
             rightTeamFound[i].player.transfer(rightTeamFound[i].price);
         }
         ended = true;
