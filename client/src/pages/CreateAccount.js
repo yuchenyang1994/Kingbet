@@ -10,6 +10,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import AccountStore from '../store/data/account';
 import Button from "@material-ui/core/Button";
 import { saveAs } from 'file-saver';
 
@@ -164,6 +165,7 @@ export default function CreatAccount(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [password, setPassword] = React.useState("");
   const [account, setAccount] = React.useState({});
+  const { dispatch: AccountDispatch } = React.useContext(AccountStore.Context);
   const steps = getSteps();
   const web3 = React.$web3;
 
@@ -178,7 +180,9 @@ export default function CreatAccount(props) {
               setAccount(account);
               setActiveStep(1);
             }}
-            onCancel={event => {}}
+            onCancel={event => {
+              props.history.push("/Greeting")
+            }}
           />
         )
       case 1:
@@ -204,7 +208,14 @@ export default function CreatAccount(props) {
             }}
 
             onOK={event => {
-              props.history.push("/wallet")
+              props.history.push("/wallet");
+              AccountDispatch({
+                type: "Unlock",
+                payload: {
+                  privateKey: account.privateKey,
+                  address: account.address
+                }
+              });
             }}
             onCancel={event => {
               setActiveStep(1);

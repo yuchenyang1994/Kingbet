@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MessageStore from '../store/data/message';
+import AccountStore from '../store/data/account';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Card from "@material-ui/core/Card";
@@ -32,6 +33,7 @@ export default function Greeting(props) {
   const [password, setPassword] = React.useState("");
   const web3 = React.$web3;
   const { state: msg, dispatch: messageDispatch } = React.useContext(MessageStore.Context);
+  const { dispatch: AccountDispatch } = React.useContext(AccountStore.Context);
   return (
     <div className={classes.root}>
       <Card>
@@ -78,6 +80,13 @@ export default function Greeting(props) {
                       type: "success",
                     }
                   });
+                  AccountDispatch({
+                    type: "Unlock",
+                    payload: {
+                      privateKey: account.privateKey,
+                      address: account.address
+                    }
+                  })
                   props.history.push("/wallet")
                 } catch (error) {
                   messageDispatch({

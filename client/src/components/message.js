@@ -2,7 +2,6 @@ import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import MessageStore from "../store/data/message"; 
-import Slide from '@material-ui/core/Slide';
 
 
 function Alert(props) {
