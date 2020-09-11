@@ -19,7 +19,6 @@ const Provider = (props) => {
 
 const reducer = (state, action) => {
   const { type, payload } = action;
-
   switch (type) {
     case 'Show':
         return {
@@ -30,7 +29,7 @@ const reducer = (state, action) => {
     case "Close":
         return {
             open: false,
-            type: "",
+            type: state.type,
             message: ""
         }
     default:

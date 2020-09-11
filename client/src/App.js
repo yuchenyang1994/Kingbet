@@ -35,7 +35,6 @@ export default function App({route, history}) {
       <Container maxWidth="sm" className={classes.content}>
         <Switch>
           {renderRoutes(route.routes)}
-          <Snackbars/>
         </Switch>
       </Container>
       <BottomNavigation
@@ -54,6 +53,7 @@ export default function App({route, history}) {
         <BottomNavigationAction label="竞猜" icon={<SportsEsportsIcon />} />
         <BottomNavigationAction label="钱包" icon={<AccountBalanceWalletIcon />} />
       </BottomNavigation>
+      <Snackbars/>
     </Box>
   );
 }

@@ -1,10 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import MessageStore from '../store/data/message';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
@@ -33,7 +31,7 @@ export default function Greeting(props) {
   const classes = useStyle();
   const [password, setPassword] = React.useState("");
   const web3 = React.$web3;
-  const { dispatch: messageDispatch } = React.useContext(MessageStore.Context);
+  const { state: msg, dispatch: messageDispatch } = React.useContext(MessageStore.Context);
   return (
     <div className={classes.root}>
       <Card>
@@ -73,6 +71,13 @@ export default function Greeting(props) {
                 try {
                   let keystore = JSON.parse(e.target.result); 
                   let account = web3.eth.accounts.decrypt(keystore, password);
+                  messageDispatch({
+                    type: "Show",
+                    payload: {
+                      message: "解锁成功",
+                      type: "success",
+                    }
+                  });
                   props.history.push("/wallet")
                 } catch (error) {
                   messageDispatch({
@@ -81,7 +86,7 @@ export default function Greeting(props) {
                       message: "不能正确解锁，检查keystore和密码重试",
                       type: "error",
                     }
-                  })
+                  });
                 }
               }
             }}
@@ -99,7 +104,9 @@ export default function Greeting(props) {
             </Button>
           </label>
           <div style={{ textAlign: "right" }}>
-            <Button color="primary">新建账户</Button>
+            <Button color="primary" onClick={()=> {
+              props.history.push("/CreateAccount")
+            }}>新建账户</Button>
           </div>
         </CardContent>
       </Card>
