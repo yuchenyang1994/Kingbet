@@ -68,8 +68,11 @@ export default function Greeting(props) {
               let reader = new FileReader();
               reader.readAsText(file);
               reader.onload = e => {
-                let keystore = JSON.parse(e.target.result); 
-                let account = web3.eth.accounts.decrypt(keystore, password);
+                try {
+                  let keystore = JSON.parse(e.target.result); 
+                  let account = web3.eth.accounts.decrypt(keystore, password);
+                } catch (error) {
+                }
                 props.history.push("/wallet")
               }
             }}

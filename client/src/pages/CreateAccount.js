@@ -201,7 +201,6 @@ export default function CreatAccount(props) {
               let keystore_stringify = JSON.stringify(keystore);
               let keystore_file = new File([keystore_stringify], "keystore.json", { type: "text/plain;charset=utf-8" });
               saveAs(keystore_file);
-              localStorage.setItem("keystore", keystore_stringify);
             }}
 
             onOK={event => {
