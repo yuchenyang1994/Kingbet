@@ -1,3 +1,4 @@
+import React from 'react';
 import providers from './providers';
 
 // 数据 Provider 组合器

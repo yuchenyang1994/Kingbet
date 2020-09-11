@@ -13,6 +13,7 @@
     "@material-ui/icons": "^4.9.1",
     "axios": "^0.20.0",
     "clsx": "latest",
+    "file-saver": "^2.0.2",
     "react": "latest",
     "react-dom": "latest",
     "react-router-config": "^5.1.1",

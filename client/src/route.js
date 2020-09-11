@@ -1,7 +1,7 @@
-import React from 'react';
 import App from './App';
 import Home from './pages/Home';
 import Wallet from './pages/Wallet';
+import CreateAccount from './pages/CreateAccount';
 
 const routes = [{
     path: "/",
@@ -13,6 +13,9 @@ const routes = [{
     }, {
         path: "/wallet",
         component: Wallet
+    }, {
+        path: "/createAccount",
+        component: CreateAccount
     }]
 }];
 
