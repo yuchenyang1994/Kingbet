@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Root from './Root';
 import theme from './theme';
 
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}

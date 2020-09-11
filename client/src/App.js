@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import { BottomNavigation, BottomNavigationAction} from '@material-ui/core';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import Snackbars from './components/message';
 import { renderRoutes } from "react-router-config";
 import { Switch } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,6 +35,7 @@ export default function App({route, history}) {
       <Container maxWidth="sm" className={classes.content}>
         <Switch>
           {renderRoutes(route.routes)}
+          <Snackbars/>
         </Switch>
       </Container>
       <BottomNavigation

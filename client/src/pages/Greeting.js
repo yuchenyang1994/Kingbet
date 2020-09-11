@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import MessageStore from '../store/data/message';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
@@ -32,6 +33,7 @@ export default function Greeting(props) {
   const classes = useStyle();
   const [password, setPassword] = React.useState("");
   const web3 = React.$web3;
+  const { dispatch: messageDispatch } = React.useContext(MessageStore.Context);
   return (
     <div className={classes.root}>
       <Card>
@@ -71,9 +73,16 @@ export default function Greeting(props) {
                 try {
                   let keystore = JSON.parse(e.target.result); 
                   let account = web3.eth.accounts.decrypt(keystore, password);
+                  props.history.push("/wallet")
                 } catch (error) {
+                  messageDispatch({
+                    type: "Show",
+                    payload: {
+                      message: "不能正确解锁，检查keystore和密码重试",
+                      type: "error",
+                    }
+                  })
                 }
-                props.history.push("/wallet")
               }
             }}
             type="file"

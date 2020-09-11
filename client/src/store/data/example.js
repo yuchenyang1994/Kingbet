@@ -1,7 +1,5 @@
 import React, { useReducer } from 'react';
 
-import reducer, { initState } from './reducer';
-
 //  const { state: lists, dispatch: listsDispatch } = React.useContext(StoreLists.Context);
 //  handleDelete = item => () => {
 //    listsDispatch({
