@@ -19,7 +19,8 @@ function getSteps() {
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    paddingTop: "1vh",
+    paddingTop: "3vh",
+    paddingBottom: "2vh",
     display: "flex",
     height: "100%",
     flexDirection: "column",
