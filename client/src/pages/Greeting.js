@@ -57,6 +57,7 @@ export default function Greeting(props) {
                 let keystore_string = e.target.result;
                 let keystore = JSON.parse(keystore_string);
                 let account = web3.eth.accounts.decrypt(keystore, password);
+                web3.eth.defaultAccount = account;
                 window.localStorage.setItem("keystore", keystore_string);
                 messageDispatch({
                   type: "Show",
@@ -113,6 +114,7 @@ export default function Greeting(props) {
           let keystore = JSON.parse(keystore_string);
           try {
             let account = web3.eth.accounts.decrypt(keystore, password);
+            web3.eth.defaultAccount = account.address;
             messageDispatch({
               type: "Show",
               payload: {

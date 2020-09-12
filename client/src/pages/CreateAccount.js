@@ -210,6 +210,7 @@ export default function CreatAccount(props) {
 
             onOK={event => {
               props.history.push("/wallet");
+              web3.eth.defaultAccount = account.address;
               AccountDispatch({
                 type: "Unlock",
                 payload: {
