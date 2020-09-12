@@ -204,6 +204,7 @@ export default function CreatAccount(props) {
               let keystore = web3.eth.accounts.encrypt(account.privateKey, password);
               let keystore_stringify = JSON.stringify(keystore);
               let keystore_file = new File([keystore_stringify], "keystore.json", { type: "text/plain;charset=utf-8" });
+              window.localStorage.setItem("keystore", keystore_stringify)
               saveAs(keystore_file);
             }}
 
