@@ -51,6 +51,12 @@ export default function Wallet(props) {
   const classes = useStyle();
   const { state: accountState ,dispatch: AccountDispatch } = React.useContext(AccountStore.Context);
   const web3 = React.$web3;
+  const network = [
+    {
+      "name": "Rinkeby",
+      "http": "https://rinkeby.infura.io/v3/df9efaebc06e47feb9dd23f7c933b031",
+    }
+  ];
 
   useEffect(()=> {
     let fetch_balance = async () => {
