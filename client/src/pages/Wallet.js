@@ -14,7 +14,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import SendIcon from "@material-ui/icons/Send";
 import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
-import LinkIcon from "@material-ui/icons/Link";
 import Paper from "@material-ui/core/Paper";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -59,10 +58,6 @@ function GasPriceDialog(props) {
     { value: 165, label: "最快" },
   ];
 
-  function labelFormat(value) {
-    return gasPriceMark.findIndex((gas) => gas.value === value) + 1;
-  }
-
   return (
     <Dialog open={props.open} onClose={props.handleClose}>
       <DialogTitle>设置矿工手续费</DialogTitle>
@@ -101,13 +96,7 @@ export default function Wallet(props) {
   );
   const web3 = React.$web3;
   const [openGasPrice, setOpenGasPrice] = React.useState(false);
-  const network = [
-    {
-      name: "Rinkeby",
-      http: "https://rinkeby.infura.io/v3/df9efaebc06e47feb9dd23f7c933b031",
-    },
-  ];
-
+  
   useEffect(() => {
     let fetch_balance = async () => {
       if (accountState.unLock) {
@@ -180,6 +169,9 @@ export default function Wallet(props) {
             }}
             onDelete={() => {
               window.localStorage.removeItem("keystore");
+              AccountDispatch({
+                "type": "Lock"
+              })
               props.history.push("/Greeting");
             }}
           ></AccountCard>
@@ -198,12 +190,6 @@ export default function Wallet(props) {
                   <LocalGasStationIcon />
                 </ListItemIcon>
                 <ListItemText primary="设置矿工手续费" />
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon>
-                  <LinkIcon />
-                </ListItemIcon>
-                <ListItemText primary="设置以太坊网络" />
               </ListItem>
             </List>
           </Paper>

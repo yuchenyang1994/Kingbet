@@ -36,7 +36,7 @@ export default function Greeting(props) {
   const classes = useStyle();
   const [password, setPassword] = React.useState("");
   const web3 = React.$web3;
-  const { state: msg, dispatch: messageDispatch } = React.useContext(
+  const { dispatch: messageDispatch } = React.useContext(
     MessageStore.Context
   );
   const { dispatch: AccountDispatch } = React.useContext(AccountStore.Context);
@@ -57,7 +57,7 @@ export default function Greeting(props) {
                 let keystore_string = e.target.result;
                 let keystore = JSON.parse(keystore_string);
                 let account = web3.eth.accounts.decrypt(keystore, password);
-                web3.eth.defaultAccount = account;
+                web3.eth.defaultAccount = account.address;
                 window.localStorage.setItem("keystore", keystore_string);
                 messageDispatch({
                   type: "Show",
@@ -75,6 +75,7 @@ export default function Greeting(props) {
                 });
                 props.history.push("/wallet");
               } catch (error) {
+                console.log(error)
                 messageDispatch({
                   type: "Show",
                   payload: {

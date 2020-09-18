@@ -31,6 +31,14 @@ const reducer = (state, action) => {
             balance: 0,
             gasPrice: state.gasPrice
         };
+    case 'Lock':
+        return {
+            unLock: false,
+            privateKey: "",
+            address: "",
+            balance: 0,
+            gasPrice: 0
+        };
     case "Balance":
         return {
             unLock: state.unLock,
